@@ -18,7 +18,7 @@ public class LDAPConnector {
     @Autowired
     private Environment environment;
 
-    public DirContext getConnection() throws NamingException {
+    public DirContext getConnection(String username, String password) throws NamingException {
         String connectionString="ldap://%s:%s";
         Hashtable env = new Hashtable();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");

@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +51,7 @@ public class ScheduleGetDataApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		testLDAP LDAPDAO= (testLDAP) applicationContext.getBean("testLDAP");
 		LDAPDAO.test();
+
 //		SendMailService mailService=(SendMailService)applicationContext.getBean("sendMailService");
 //		String[] to={"datpt@timebird.org","cuongtt@timebird.org",
 //				"thamnt@timebird.org","nhatcl@timebird.org","quangnh@timebird.org","linhht@timebird.org"};
