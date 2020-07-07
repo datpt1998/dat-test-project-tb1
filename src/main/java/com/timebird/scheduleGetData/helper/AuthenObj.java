@@ -1,10 +1,10 @@
 package com.timebird.scheduleGetData.helper;
 
-public class AuthenObj {
+public class AuthenObj<T> {
     private boolean isPass;
-    private String content;
+    private T content;
 
-    public AuthenObj(boolean isPass, String content) {
+    public AuthenObj(boolean isPass, T content) {
         this.isPass = isPass;
         this.content = content;
     }
@@ -17,11 +17,11 @@ public class AuthenObj {
         isPass = pass;
     }
 
-    public String getContent() {
+    public T getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(T content) {
         this.content = content;
     }
 }

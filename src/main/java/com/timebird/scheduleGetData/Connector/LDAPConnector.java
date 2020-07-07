@@ -26,8 +26,8 @@ public class LDAPConnector {
                 environment.getProperty("ldap.host"),
                 environment.getProperty("ldap.port")));
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
-        env.put(Context.SECURITY_PRINCIPAL, environment.getProperty("ldap.username"));
-        env.put(Context.SECURITY_CREDENTIALS, environment.getProperty("ldap.password"));
+        env.put(Context.SECURITY_PRINCIPAL, username);
+        env.put(Context.SECURITY_CREDENTIALS, password);
         return new InitialDirContext(env);
     }
 }

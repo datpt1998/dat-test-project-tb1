@@ -33,9 +33,15 @@ public class testLDAP {
                 SearchResult result=answer.next();
                 System.out.println(result.getAttributes().get("name").toString());
             }
-            ctx.close();
             } catch (NamingException e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                ctx.close();
+            } catch (NamingException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
