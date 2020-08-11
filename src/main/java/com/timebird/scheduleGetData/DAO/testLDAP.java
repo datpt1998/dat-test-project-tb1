@@ -28,10 +28,10 @@ public class testLDAP {
                     environment.getProperty("ldap.password"));
             SearchControls searchControls=new SearchControls();
             searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-            NamingEnumeration<SearchResult> answer=ctx.search("ou=employee,dc=timebird,dc=org", "mail=timesheet@timebird.org", searchControls);
+            NamingEnumeration<SearchResult> answer=ctx.search("ou=employee,dc=timebird,dc=org", "mail=datpt@timebird.org", searchControls);
             while(answer.hasMore()){
                 SearchResult result=answer.next();
-                System.out.println(result.getAttributes().get("name").toString());
+                System.out.println(result.getAttributes().toString());
             }
             } catch (NamingException e) {
             e.printStackTrace();

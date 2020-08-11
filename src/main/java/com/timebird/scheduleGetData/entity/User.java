@@ -59,6 +59,38 @@ public class User {
         return gender;
     }
 
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "User{" +

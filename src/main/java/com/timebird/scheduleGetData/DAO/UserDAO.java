@@ -1,7 +1,11 @@
 package com.timebird.scheduleGetData.DAO;
 
+import com.mongodb.MongoClient;
+import com.timebird.scheduleGetData.Connector.MongoConnector;
 import com.timebird.scheduleGetData.Connector.MySQLConnector;
 import com.timebird.scheduleGetData.entity.User;
+import org.bson.BsonDocument;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +18,8 @@ import java.util.List;
 public class UserDAO {
     @Autowired
     MySQLConnector connector;
+    @Autowired
+    MongoConnector mongoConnector;
 
     public List<User> getAllUser(){
         List<User> users=new ArrayList<>();
@@ -44,5 +50,17 @@ public class UserDAO {
             connector.closeConnection(connection, statement, resultSet);
         }
         return users;
+    }
+
+    public User getUserByMail(String mail){
+        MongoClient mongoClient=mongoConnector.getConnection();
+        Document docUser=mongoClient
+                .getDatabase("timesheet")
+                .getCollection("user")
+                .find(new Document().append("mail", mail)).first();
+        User user=new User();
+        user.setMail(docUser.getString("mail"));
+        user.setRole(docUser.getString("role"));
+        return user;
     }
 }
