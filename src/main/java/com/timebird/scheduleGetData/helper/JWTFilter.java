@@ -27,6 +27,7 @@ public class JWTFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        System.out.println(request.getServletPath());
         if(request.getHeader("access-token")==null){
             SecurityContextHolder.getContext().setAuthentication(null);
             chain.doFilter(request,response);

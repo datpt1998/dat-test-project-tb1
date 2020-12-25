@@ -1,5 +1,8 @@
 package com.timebird.scheduleGetData.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Entity;
 import java.util.Date;
 
 public class User {
@@ -8,8 +11,10 @@ public class User {
     private String username;
     private Date birthday;
     private String address;
+    @JsonIgnore
     private String mail;
     private String role;
+    @JsonIgnore
     private String gender;
 
     public User() {

@@ -26,22 +26,17 @@ public class UserDAO {
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSet=null;
-        String query="select userid, Username, DOB, Name , Address , Phone , Email , Gender " +
-                "from user where Name is NOT null and Name<>'' and userid <> 9503402";
+        String query="select customer_id, last_name, email " +
+                "from customer";
         try {
             connection=connector.getMySQLConnection();
             statement=connection.prepareStatement(query);
             resultSet=statement.executeQuery();
             while(resultSet.next()){
-                String id=resultSet.getString("userid");
-                String name=resultSet.getString("Name");
-                String username=resultSet.getString("Username");
-                Date birthday=resultSet.getDate("DOB");
-                String address=resultSet.getString("Address");
-                String mail=resultSet.getString("Email");
-                String role="Normal";
-                String gender=resultSet.getString("Gender");
-                users.add(new User(id, name, username, birthday, address, mail, role, gender));
+                String id=resultSet.getString("customer_id");
+                String name=resultSet.getString("last_name");
+                String mail=resultSet.getString("email");
+                users.add(new User(id, name, "username", null, "address", mail, "role", "gender"));
             }
         }catch (SQLException e){
             e.printStackTrace();

@@ -2,14 +2,16 @@ package com.timebird.scheduleGetData.Controller;
 
 import com.timebird.scheduleGetData.DAO.LDAPAuthenticator;
 import com.timebird.scheduleGetData.Modal.LoginModal;
+import com.timebird.scheduleGetData.Modal.ServiceResult;
+import com.timebird.scheduleGetData.Modal.TestChild;
+import com.timebird.scheduleGetData.Modal.TestListWrap;
 import com.timebird.scheduleGetData.Modal.UserDetailDTO;
 import com.timebird.scheduleGetData.Service.ExcelService;
 import com.timebird.scheduleGetData.Service.JWTService;
+import com.timebird.scheduleGetData.Service.MACService;
+import com.timebird.scheduleGetData.Service.MyService;
 import com.timebird.scheduleGetData.entity.User;
-import com.timebird.scheduleGetData.helper.AuthenObj;
-import com.timebird.scheduleGetData.helper.CustomResponseEntity;
-import com.timebird.scheduleGetData.helper.MyResponseObj;
-import com.timebird.scheduleGetData.helper.TokenObject;
+import com.timebird.scheduleGetData.helper.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -27,7 +29,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -39,10 +44,34 @@ public class MyController {
     LDAPAuthenticator authenticator;
     @Autowired
     ExcelService excelService;
+    @Autowired
+    MACService macService;
 
-    @GetMapping("/test")
-    public ResponseEntity myTestHeader(@AuthenticationPrincipal(expression = "user") User user){
-        return new CustomResponseEntity<User>(user, HttpStatus.OK);
+    @GetMapping("/test/{text}")
+    public ResponseEntity myTestHeader(@AuthenticationPrincipal Object user, @PathVariable String text, @RequestParam String myText, HttpServletRequest request, HttpServletResponse response,
+                                       @RequestHeader("User-Agent") String userAgent, @RequestParam(required = false) Long myLong,
+                                       @RequestParam(required = false, defaultValue = "")Set<String> mySet){
+        System.out.println(myText.matches("myapi/?()"));
+        System.out.println(request.getRemoteAddr());
+        System.out.println(macService.getClientMACAddress("192.168.40.37"));
+        System.out.println(mySet.size());
+        System.out.println(myLong);
+        System.out.println(response.getStatus());
+        boolean myBool=true;
+        if(myBool){
+            response.setStatus(400);
+        }
+        System.out.println(response.getStatus());
+        System.out.println(userAgent);
+        System.out.println(text);
+        System.out.println(myText);
+        System.out.println(request.getServletPath());
+        System.out.println(request.getRequestURI());
+        if(user instanceof  UserDetailDTO){
+            UserDetailDTO current=(UserDetailDTO) user;
+            return new ResponseEntity(current.getUser(), HttpStatus.OK);
+        }
+        return new ResponseEntity(user,HttpStatus.valueOf(response.getStatus()));
     }
 
     @PostMapping("/login")
@@ -59,7 +88,8 @@ public class MyController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity verifyToken(@RequestHeader("Access-Token") String accessToken){
+    public ResponseEntity verifyToken(@RequestHeader("Access-Token") String accessToken, HttpServletRequest request){
+        System.out.println(request.getServletPath());
         AuthenObj<String> authenObj=jwtService.decodeAccess(accessToken);
         if(authenObj.isPass()){
             return new CustomResponseEntity<String>(authenObj.getContent(), HttpStatus.OK);
@@ -70,7 +100,8 @@ public class MyController {
     }
 
     @GetMapping(value = "/export", produces = "application/vnd.ms-excel")
-    public ResponseEntity<InputStreamResource> download2(HttpServletRequest request) throws IOException {
+    public ResponseEntity<InputStreamResource> download2(HttpServletRequest request, @RequestParam String path) throws IOException {
+        System.out.println(request.getServletPath());
         AuthenObj authenObj=excelService.createExcel("test.xls");
         HttpHeaders responseHeader = new HttpHeaders();
         try {
@@ -87,6 +118,12 @@ public class MyController {
         } catch (Exception ex) {
             return new ResponseEntity<InputStreamResource>(null, responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<ServiceResult> fakeValidate(@RequestBody LoginModal modal){
+        System.out.println("Info:" +modal.username+" "+modal.password);
+        return new ResponseEntity<>(new ServiceResult(null, ServiceResult.STATUS_SUCCESS, "Validate successful"), HttpStatus.OK);
     }
 
 

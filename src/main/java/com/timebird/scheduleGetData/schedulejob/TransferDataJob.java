@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Component
 public class TransferDataJob {
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "1 * * * * *", zone = "Asia/Ho_Chi_Minh")
     public void mySche(){
         System.out.println("hello, now is"+new Date());
     }

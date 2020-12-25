@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header,
+    .content .title-area,
+    .content .content-area,
+    .footer {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .header {
+      margin-bottom: 161.5px;
+    }
+
+    .content .title-area {
+      margin-bottom: 88.5px;
+      line-height: 37px;
+    }
+
+    .content .content-area {
+      margin-bottom: 143px;
+    }
+
+    .content .content-area .right-content .inner-content {
+      width: 522px;
+    }
+
+    .left-content {
+      width: 305px;
+    }
+
+    .right-content {
+      width: 591px;
+    }
+
+    .inner-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer .right-content .inner-content {
+      flex-direction: row;
+    }
+
+    .information-area {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: -5px;
+    }
+
+    .footer-logo-area {
+      display: flex;
+      flex-direction: row;
+      width: 404px;
+      border-right: solid 3px #f8b391;
+      margin-right: 45px;
+    }
+
+    .footer-logo {
+      width: 99px;
+      margin-right: 37px;
+    }
+
+    .footer-logo-text {
+      display: flex;
+      flex-direction: column;
+      opacity: 0.5;
+      margin-bottom: -4px;
+    }
+
+    .footer-logo-title {
+      font-family: sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .footer-logo-subtitle {
+      font-family: sans-serif;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .header-logo {
+      width: 100%;
+    }
+
+    .title {
+      font-family: sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-family: sans-serif;
+      font-size: 16px;
+    }
+
+    .dear-text {
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .content-text {
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+
+    .icon {
+      width: 17px;
+      margin-right: 24px;
+    }
+
+    .information {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 5px;
+    }
+
+    .information-text {
+      font-family: sans-serif;
+      font-size: 11px;
+      opacity: 0.5;
+    }
+
+    .footer-title{
+      font-family: sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 11px;
+    }
+    .footer-subtitle{
+      font-family: sans-serif;
+      font-size: 9px;
+      letter-spacing: 9px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="left-content">
+        <img class="header-logo" src="data:image/png;base64,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
+" />
+      </div>
+      <div class="right-content"></div>
+    </div>
+    <div class="content">
+      <div class="title-area">
+        <div class="left-content">
+          <div class="inner-content">
+            <div class="title">TIMEBIRDCHECKER</div>
+            <div class="subtitle">SYSTEM MAIL</div>
+          </div>
+        </div>
+        <div class="right-content">
+          <div class="inner-content">
+            <div class="title">THƯ CẢNH BÁO ĐI LÀM MUỘN</div>
+            <div class="subtitle">14 SEPTEMBER 2020</div>
+          </div>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="left-content">
+          <div class="inner-content">
+            <div class="dear-text" th:text="'hello bạn'+ ${mail}"></div>
+          </div>
+        </div>
+        <div class="right-content">
+          <div class="inner-content">
+            <div class="content-text">
+              Ngày hôm nay XX/YY/2020 đã đi làm muộn XX phút so với giờ làm việc quy định. Việc
+              đi muộn của bạn bộ phận HR chưa nhận được mail báo cáo nào, việc đi muộn chỉ được chấp nhận và vẫn tính
+              lương khi lý do đó liên quan đến công việc và công ty.
+              <p>Quy chế áp dụng tính phạt đi muộn:</p>
+              <p>- Sau 9h30: 50.000 VNĐ</p>
+              <p>- Sau 10h00: 100.000 VNĐ</p>
+              <p>Việc phạt đi muộn sẽ được tính và trừ thẳng vào kì lương hàng tháng
+                của bạn. Mong bạn đi làm đúng giờ hơn trong những ngày sau. Chúc bạn một ngày làm việc thật hiệu quả!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="left-content">
+        <div class="inner-content">
+          <div class="footer-title">TIMEBIRDCHECKER</div>
+          <div class="footer-subtitle">SYSTEM MAIL</div>
+        </div>
+      </div>
+      <div class="right-content">
+        <div class="inner-content">
+          <div class="footer-logo-area">
+            <img class="footer-logo" src="data:image/png;base64,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
+" />
+            <div class="footer-logo-text">
+              <div class="footer-logo-title">TIMEBIRDCHECKER SYSTEM</div>
+              <div class="footer-logo-subtitle">SYSTEM MAIL</div>
+              <div class="footer-logo-subtitle">TIMEBIRD TECHNOLOGY JSC</div>
+            </div>
+          </div>
+          <div class="information-area">
+            <div class="information">
+              <img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsSAAALEgHS3X78AAABf0lEQVQ4jX1UoW7DMBB9iwpGLBUOFhgUFhYWDuYTRv1FpoWDhYOBgYEBAYWFlUzKOr3unerayU6Kkpztd+/e3fntfr9jyVLwHwDes+WLi9NtbnsFlILnwT2AHYB1dQI4A+hcnM6LQGLQAuB74GMHUvAE3SgA372L008FJJAvAFcAJxenS8XlGZCMPxXoRF+TrZMJ8z/+B0JzceoZjOwE+geUgt8pnVMupvyz5uI0KP0DdTVGPDDmAqbgD2RpEResU1W3BkTxxmKvAcxVzlKknpRh00hkSOTcLMWuQng1ZrFuKvfTBn0dqpWZgCtWKAWPooNJu0vBb5mi1jdKoy+qSv/NGHFhW8UCjqK+V1WtGR+mKeD/2YBG9cSLsGwFF6ejeoZafauHzKwg40ofvZytWKAAHEqfirRXqtfGIjMaaabgW1FetGKcHlUth5YacIYIzA1s0rzTmTpZ8KGuHKfH+tw1ws1M0US1bqefDw8ynZf+WrzYsmsjLwAvtnICAAC/GiqslUB5wt0AAAAASUVORK5CYII=
+              " />
+              <div class="information-text">+84 964 063 228</div>
+            </div>
+            <div class="information">
+              <img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAAACXBIWXMAAAsSAAALEgHS3X78AAABgElEQVQ4jYWUIW8CQRCFv14QmEsQFYgKxCZFtElThaioqEDyN/YXna2sRFZUIEkFQVRc02tyElFBsgZH88gsvdwt9CWbsMvMu5k3b/div9/TRvBuAIxtDYE+sAG2QJkX1bqd0yEK3j0CE9uWlhwRiXX2khfVJkkUvJsBd8ASWORFtUtUOwKmRjiP1R2JgndTq2SeKj1BOLMKn1VZxp8mE6viXxLDK7Cz6sjsULps86JadMJPwNqeA6Pg3bDXEHHZKFv7B+AqQbMC3tVOXlR18E7Cj7PgXd/GWzeCJeQl8NE4U8IncG/xEZrcKLOkFBR8A7wB30AFXCfiDhboxR8JSIMv4Mn+0n5t9mjiUEhmommNWl/5AW4bZ30jWVl8U4Y6il1a0GFqeVGVdnYWZk5Zp4zjV8mD4N3kXGIC8lB9NKTGaOOfBu/aGiRhzlZbMubJu6YWlyfumlpRnNrq3rVGoFyuJRLpFJ8PfV1LZtVeJEfvnXuPpJcS4zRFrMTuewT8Au1BnV6Awi4vAAAAAElFTkSuQmCC
+              " />
+              <div class="information-text">Contact@timebird.org</div>
+            </div>
+            <div class="information">
+              <img class="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsSAAALEgHS3X78AAABYElEQVQ4jYVUq47DMBCcCzpiqbCwICDwYGE/4WBhYfNFPniwsLAwsLAwwCAwMJJJWKqp1tGeH9eRDJJdj8eT2Xwsy4IcfFt/AtgB2Ep5BjAa64ZMOxIi39YbAAcAX/JqkrVTz3dj3b1I5Nu6AfAtjzcAvbFuVnWq28shVHYJ9ZVIms5xQw6+ranuSHXGup+VSPwgyRwK76AO7ox1XSX9lEpvLpFfR9mQwFg3koR+UogmehjrpmgDlZ5KZDQ97A9EbOyTtjdk4iM93VaqoWiuImuSCsArbqrkdRmDCmeCSkyDmJ3DQ0LITHWZOsmnoIhkOdlM8FXIDnFRpoCZGgIR3W9iQ411vaqPkjeNvXjb62SfpeH3v1QrNY2k+08giav4dBLJRfi2Zu5IsvoWDy2vxgZegb4wpOFjBBW8Dn1h/ZYMrWomCZu5Yk+I12go/14o/tiElCfzmlzMEac9HiMAwBPg9KqRhKux4QAAAABJRU5ErkJggg==
+              " />
+              <div class="information-text">Timebird.org</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

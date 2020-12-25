@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
@@ -47,7 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/export").permitAll()
                 .antMatchers("/api/login").permitAll()
-                .antMatchers("/api/test").hasAuthority("Admin")
+                .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/api/verify").permitAll()
+                .antMatchers("/api/validate").permitAll()
+                //.antMatchers("/api/test").hasAuthority("Admin")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
@@ -111,5 +115,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 return true;
             }
         };
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+
     }
 }

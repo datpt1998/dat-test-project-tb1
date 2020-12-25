@@ -24,6 +24,7 @@ public class ExcelService {
     UserDAO userDAO;
     public HSSFCellStyle createTitleStyle(HSSFWorkbook workbook){
         HSSFFont font=workbook.createFont();
+        font.setFontName(".Vn3DH");
         font.setBold(true);
         HSSFCellStyle style=workbook.createCellStyle();
         style.setFont(font);
