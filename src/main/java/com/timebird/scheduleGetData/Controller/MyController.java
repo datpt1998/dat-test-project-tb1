@@ -5,6 +5,8 @@ import com.timebird.scheduleGetData.Modal.LoginModal;
 import com.timebird.scheduleGetData.Modal.ServiceResult;
 import com.timebird.scheduleGetData.Modal.TestChild;
 import com.timebird.scheduleGetData.Modal.TestListWrap;
+import com.timebird.scheduleGetData.Modal.TheChild;
+import com.timebird.scheduleGetData.Modal.TheParent;
 import com.timebird.scheduleGetData.Modal.UserDetailDTO;
 import com.timebird.scheduleGetData.Service.ExcelService;
 import com.timebird.scheduleGetData.Service.JWTService;
@@ -124,6 +126,16 @@ public class MyController {
     public ResponseEntity<ServiceResult> fakeValidate(@RequestBody LoginModal modal){
         System.out.println("Info:" +modal.username+" "+modal.password);
         return new ResponseEntity<>(new ServiceResult(null, ServiceResult.STATUS_SUCCESS, "Validate successful"), HttpStatus.OK);
+    }
+
+    @GetMapping("/newget")
+    public ResponseEntity<List<TheParent>> newtest() {
+        TheParent obj = new TheChild("child", "addr", "phone", "cmt");
+        TheParent realParent = new TheParent("parent", "paAdd");
+        List<TheParent> parents = new ArrayList<>();
+        parents.add(obj);
+        parents.add(realParent);
+        return new ResponseEntity<>(parents, HttpStatus.OK);
     }
 
 
